@@ -5,6 +5,9 @@
     <title>Bird On Rails</title>
     <%= csrf_meta_tags %>
     <link href="/css/style.min.css" rel="stylesheet">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-ujs.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   </head>
   <body>
     <div class="preloader">
@@ -16,12 +19,14 @@
 
     <div id="main-wrapper">
       <%= render partial: 'layouts/topbar' %>
-      <%= render partial: 'layouts/left_sidebar_materialpro' %>
+      <%= render partial: 'layouts/left_sidebar' %>
       <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
-          <div class="container-fluid">
-              <%= yield%>
+      <p class="alert"><%= alert %></p>
+      <div class="page-wrapper">
+        <div class="container-fluid rounded" style="background: rgb(228, 233, 240)">
+            <%= yield%>
           </div>
+        </div>
       </div>
     </div>
     

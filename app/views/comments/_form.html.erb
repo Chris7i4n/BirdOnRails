@@ -1,0 +1,27 @@
+<%= form_for(comment) do |f| %>
+  <% if comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+      <% comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.text_area :body, class: "form-control", placeholder: "Deixe um comentário"%>
+  </div>
+
+  <%= f.hidden_field :post_id, class: "form-control", value: post%>
+
+
+  <%= f.hidden_field :user_id, class: "form-control", value: current_user.id%>
+
+
+  <div class="actions">
+    <%= f.submit "Comentar", class:"btn btn-primary"%>
+  </div>
+<% end %>

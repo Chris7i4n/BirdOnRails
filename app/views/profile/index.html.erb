@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <img class="card-img-top w-100 profile-bg-height" src="/images/profile-background/profile-bg.jpg" alt="Card image cap">
+      <div class="card-body little-profile text-center">
+        <div class="pro-img"><img src="/images/users/1.jpg" alt="user" class="rounded-circle shadow-sm" width="128px"></div>
+        <h3 class="mb-0"><%= @visited_profile_user.email%></h3>
+        <p>Pequena descrição</p>
+         <% if current_user.id == @visited_profile_user.id %>
+
+         <% else%>
+          <button id="follow-button" class="mt-2 waves-effect waves-dark btn btn-primary btn-md btn-rounded">
+            <% if current_user.following?(@visited_profile_user) %>
+              Seguindo
+            <% else%>
+              Seguir
+            <% end %>
+          </button>
+        <% end %>
+        <div class="row text-center mt-3 justify-content-center">
+          <div class="col-6 col-md-4 mt-3">
+            <h3 class="mb-0 font-weight-light"><%= @visited_profile_user.posts.count%></h3><small>Posts</small>
+          </div>
+          <div class="col-6 col-md-4 mt-3">
+            <h3 class="mb-0 font-weight-light"><%= @visited_profile_user.followers.count%></h3><small>Followers</small>
+          </div>
+          <div class="col-6 col-md-4 mt-3">
+            <h3 class="mb-0 font-weight-light"><%= @visited_profile_user.following.count%></h3><small>Seguindo</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%if current_user.id == @visited_profile_user.id%>
+<div class="row">
+  <div class="col-md-12">
+    <%= render partial: 'posts/form', locals: { post: @post }%>
+  </div>
+</div>
+<%end%>
+
+<% @posts.each do |post|%>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card p-2 border border-info">
+        <h5 class="card-title"><%=post.user.email%></h5>
+        <div class="card-body border border-secundary rounded">
+          <p class="border border-dark rounded p-3" ><b><%= post.body%></b><p>
+          <div class="comment-widgets scrollable mb-2 common-widget ps-container ps-theme-default" style="max-height: 300px;">
+            <%post.comments.each do |comment|%>
+              <div class="d-flex flex-row comment-row p-3">
+                  <div class="p-2"><span class="round text-white d-inline-block text-center bg-info"><img src="" class="rounded-circle" alt="user" width="50"></span></div>
+                  <div class="comment-text w-100 p-3">
+                      <h5 class="text-nowrap"><a href="profile/<%= comment.user.id%>"><%= comment.user.email%></a></h5>
+                      <p class="mb-1 overflow-hidden"><%=comment.body%></p>
+                      <div class="comment-footer"> <span class="text-muted pull-right"><%=comment.created_at.strftime("%d/%m/%Y")%>
+                              <a href="javascript:void(0)" class="pl-3"><i class="ti-pencil-alt"></i></a>
+                              <a href="javascript:void(0)" class="pl-3"><i class="ti-check"></i></a>
+                              <a href="javascript:void(0)" class="pl-3"><i class="ti-heart"></i></a>
+                          </span> </div>
+                  </div>
+              </div>
+            <%end %>
+          </div>
+        <%= render partial: 'comments/form', locals: { comment: @comment, post: post.id }%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+<%end %>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $("#follow-button").click(function(e) {
+          $.get("/follow/<%=@visited_profile_user.id%>", function(data) {
+              document.location.reload(true);
+          })  
+
+      });
+
+    });
+</script>

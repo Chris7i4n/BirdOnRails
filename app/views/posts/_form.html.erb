@@ -1,0 +1,20 @@
+<div class="row"> 
+  <div class="col-md-12">
+    <div class="card border border-secundary">
+      <div class="card-body ">
+        <%= form_for(post) do |f| %>
+
+          <div class="form-group">
+            <%= f.label :body, "Publique algo"%>
+            <%= f.text_area :body, class: "form-control" %>
+          </div>
+
+        <%= f.hidden_field :user_id, value: current_user.id %>
+          <div class="actions">
+            <%= f.submit 'Postar', class: 'btn btn-primary'%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
